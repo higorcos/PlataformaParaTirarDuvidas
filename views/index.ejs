@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href='/css/style.css'>
+  <title>Site de Perguntas</title>
+</head>
+<body>
+<h6>Teste de variavel </h6>
+<hr>
+<p><%= nomeUser %></p> 
+<hr>
+<p><%= langUser %></p>
+<hr>
+<h6><% if(msgServidor == true){ %>
+<p><% contatoUser.forEach(function(contato) { %>
+<h6><%= contato.email %>
+<%= contato.dominio %></h6>
+<% }) %>
+<hr>
+<%} else {%>
+<p>Nenhum dado encontrado no servidor</p>
+<%}%>
+<p><%= projeto %></p>
+
+
+
+  
+</body>
+</html>
