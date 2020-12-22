@@ -1,0 +1,13 @@
+body{
+  background-color:rgb(11, 39, 66);
+}
+div#form-pergunta{
+  margin-top: 5vh;
+}
+nav#navbar{
+  background-color: rgb(35, 93, 143);
+}
+#botao-perguntar{
+  background-color: rgb(11, 39, 66);
+  color: aliceblue;
+}
