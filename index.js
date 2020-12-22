@@ -1,6 +1,19 @@
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser'); //
+const bodyParser = require('body-parser'); //importando a biblioteca que facilita a leitura dos dados passados pelo usuario 
+const connection = require('./database/database'); // importando o banco de dados
+const perguntas = require('./database/Perguntas'); //importando a tabela 
+
+//database
+connection 
+  .authenticate()
+  .then(() => {
+    console.log('Conectado com succeso ao banco de dados');
+  })
+  .catch((msqErro) => {
+    console.log(msqErro);
+  })
+
 //EJS
 app.set('view engine', 'ejs'); //motor html //estou dizendo para o express usar o EJS como View engine 
 app.use(express.static('public'));
