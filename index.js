@@ -5,7 +5,7 @@ const connection = require('./database/database'); // importando o banco de dado
 const perguntas = require('./database/Perguntas'); //importando a tabela 
 
 //database
-connection 
+connection
   .authenticate()
   .then(() => {
     console.log('Conectado com succeso ao banco de dados');
@@ -17,21 +17,40 @@ connection
 //EJS
 app.set('view engine', 'ejs'); //motor html //estou dizendo para o express usar o EJS como View engine 
 app.use(express.static('public'));
+
 //Body Parser
-app.use(bodyParser.urlencoded({extended: false})); // usado para traduzir os dados passados no formulario 
+app.use(bodyParser.urlencoded({ extended: false })); // usado para traduzir os dados passados no formulario 
 app.use(bodyParser.json()); // os dados são enviados via json 
+
 //Rotas
 app.get('/', (req, res) => {
-
-  res.render('index');//vai mostra o html pelo EJS que tá na pasta "views"// só coloca  o nome do arquivo não precisa colocar o diretório completo.//passa a variavel para o html 
+  perguntas.findAll({ raw: true }).then(pergunta => {  //Ele vai buscar os dados já presentes na tabela do banco de dados // semelhante a   SELECT * ALL FROM perguntas
+    res.render('index', {
+      pergunta: pergunta
+    });
+  });
 });
-app.get('/perguntar',(req,res)=>{
-  res.render('perguntar');//nome do arguivo ejs
+
+
+
+app.get('/perguntar', (req, res) => {
+  res.render('perguntar');//vai mostra o html pelo EJS que tá na pasta "views"// só coloca  o nome do arquivo não precisa colocar o diretório completo.//passa a variavel para o html 
 })
-app.post('/salvarPergunta',(req,res)=>{
-  var titulo = req.body.titulo;
-  var descrição = req.body.descrição
-  res.send(`Formulário recebido com sucesso !//////////////// ${titulo}${descrição}`);
+
+app.post('/salvarPergunta', (req, res) => {
+  //recebe os dados passados pelo usuario no formulario a partir do "name"
+  var tituloUS = req.body.titulo;
+  var descriçãoUS = req.body.descrição;
+
+  perguntas.create({ //Salva no banco de dados //semelhante a   INSERT INTO perguntas 
+    titulo: tituloUS,
+    descricao: descriçãoUS,
+
+  }).then(() => {//depois de salvar os dados no banco de dados ele redireciona o usuário para a página principal 
+    res.redirect('/');
+  })
 });
 
-app.listen(8181, () => { console.log('App rodando'); });
+app.listen(8181, () => {
+  console.log('App rodando');
+});
