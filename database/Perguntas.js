@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const connection = require('./database');
 
-const Perguntas = connection.define('Perguntas',{ //criando model/tabela
+const perguntas = connection.define('perguntas',{ //criando model/tabela
     titulo:{
         type: Sequelize.STRING, //fala o tipo 
         allowNull: false  //fala que o campo não pode ficar em branco 
@@ -11,8 +11,7 @@ const Perguntas = connection.define('Perguntas',{ //criando model/tabela
         allowNull: false
     }
 });
-Perguntas.sync({force: false}).then(() => {
- console.log('Tabela criada...')
+perguntas.sync({force: false}).then(() => {
 }); // vai criar a tabela "perguntas" se ainda não não existir !
 
-module.exports = Perguntas;
+module.exports = perguntas;

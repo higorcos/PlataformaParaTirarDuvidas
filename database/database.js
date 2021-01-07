@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const connection = new Sequelize('Duvidas.js', 'root','password',{
+const connection = new Sequelize('Duvidas.js', 'root','password',{/* senha do banco de dados 'password' */
     host: 'localhost', //onde está rodando o banco de dados 
     dialect: 'mysql'   //qual tipo de banco de dados 
 });
