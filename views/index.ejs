@@ -1,22 +1,28 @@
 <%- include('partials/header.ejs')%>
   <!--Para incluir partes de outro documento(usando quando a parte externa e reutilizada em outros códigos) -->
 
-    <body>
-      <%- include('partials/navbar.ejs')%>
+  <body>
+    <%- include('partials/navbar.ejs')%>
       <div class="container">
-        <div class="card" id='form-pergunta'>
-        <h3>Perguntas</h3>
-        <% pergunta.forEach(perguntas => { %>
-          <p id="retornoDoBanco"><%= perguntas.titulo %></p>
-          <!-- <% console.log('titulo',perguntas.titulo) %> -->
+        <hr>
+        <h1 class="CorBrancaTX">Perguntas</h1>
+        <hr>
+        <a href="/perguntar" class="btn" id="corBotao">Tirar dúvidas</a>
+        <% pergunta.forEach(perguntas=> { %>
+          <br>
+          <div class="card" id='form-pergunta'>
+            <div class="card-body">
+              <h3 id="retornoDoBanco">
+                <%= perguntas.titulo %>
+              </h3>
+            </div>
+            <div class="card-footer">
+              <button class="corBotao" class="btn">Responder</button>
+            </div>
+          </div>
           <% }) %>
-        </div>
-        
-         
+
+
       </div>
-    </body>
-    <%- include('partials/footer.ejs')%>
-   
-   
-   
-   
+  </body>
+  <%- include('partials/footer.ejs')%>
