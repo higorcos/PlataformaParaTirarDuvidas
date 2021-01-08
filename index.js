@@ -1,6 +1,7 @@
 /* 
    Sugestão 
 Organizar os titulos das peguntas em modo de relevância 
+pagina separada para soluções 
 */
 
 
@@ -62,17 +63,24 @@ app.post('/salvarPergunta', (req, res) => {
 
 app.get("/pergunta/:id",(req,res) => {
  var id =req.params.id;
- perguntas.findOne({
+ perguntas.findOne({ // vai buscaar o id no banco de dados 
    where: {id: id}
  }).then(pergunta =>{
-   if(pergunta != undefined){
-    res.render("descriçãoPerguntas",{
-      dadosHomePage: pergunta
+   if(pergunta != undefined){//id da pergunta encontrado 
+
+    Resposta.findAll({
+      where: {perguntaID: pergunta.id}, //quando o id da resposta tiver o id da pergunta 
+      order: [ ['id','DESC']]
+    }).then(respostas => {
+      res.render("descriçãoPerguntas",{
+        dadosHomePage: pergunta,
+        resHomePage: respostas
+      });
     });
    }else{ 
-    res.redirect("/")
+    res.redirect("/");
    }
- })
+ });
 })
 
 app.post("/responder",(req,res)=>{
