@@ -1,24 +1,39 @@
-<%- include('partials/header.ejs')%> <! --Para incluir partes de outro documento(usando quando a parte externa e reutilizada em outros códigos) -->
+<%- include('partials/header.ejs')%>
+    <! --Para incluir partes de outro documento(usando quando a parte externa e reutilizada em outros códigos) -->
 
-  <body>
-    <%- include('partials/navbar.ejs')%>
-      <div class="container">
-        <div class="card" id='form-pergunta'>
-            <div class="card-header">
-              <h1><%= dadosHomePage.titulo%></h1>
-            </div>
-            <div class="card-body">
-            <p><%= dadosHomePage.descricao%></p>
-            <form method="POST" action="/responder"><br>
-                <h4>Responda</h4>
-                <textarea placeholder="Digite sua resposta" class="form-control" name="corpoResposta"></textarea><br>
-                <input type="hidden" name="IdDaPergunta" value="<%= dadosHomePage.id %>">
-                <button type="submit" class="corBotao" class="btn">Responder</button>
-            </form>
-        </div>
-      </div>
-  </body>
-<%- include('partials/footer.ejs')%> 
+        <body>
+            <%- include('partials/navbar.ejs')%>
+                <div class="container">
+                    <div class="card" id='form-pergunta'>
+                        <div class="card-header">
+                            <h2>
+                                <%= dadosHomePage.titulo%>
+                            </h2>
+                        </div>
+                        <div class="card-body">
+                            <p>
+                                <%= dadosHomePage.descricao%>
+                            </p>
+                            <form method="POST" action="/responder"><br>
+                                <h4>Responda</h4>
+                                <textarea placeholder="Digite sua resposta" class="form-control"
+                                    name="corpoResposta"></textarea><br>
+                                <input type="hidden" name="IdDaPergunta" value="<%= dadosHomePage.id %>">   <!-- vai mostra qual pergunta a resposta tá linkada  -->
+                                <button type="submit" class="corBotao" class="btn">Responder</button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card" id='form-pergunta'>
+                        <div class="card-header">
+                            <h3>Soluções</h3>
+                        </div>
+                        <div class="card-body">
+                        <% resHomePage.forEach((respostas=> { %>
+                        <p><%= respostas.corpo %></p>
+                          <% }))%>
+                    </div>
+                    </div>
+        </body>
+        <%- include('partials/footer.ejs')%>
 
 
-<!-- vai mostra a qual pergunta a resposta tá linkada  -->
