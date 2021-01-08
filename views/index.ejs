@@ -8,7 +8,7 @@
         <h1 class="CorBrancaTX">Perguntas</h1>
         <hr>
         <a href="/perguntar" class="btn" id="corBotao">Tirar dúvidas</a>
-        <% pergunta.forEach(perguntas=> { %>
+        <% titulosHomePage.forEach(perguntas=> { %>
           <br>
           <div class="card" id='form-pergunta'>
             <div class="card-body">
@@ -17,7 +17,7 @@
               </h3>
             </div>
             <div class="card-footer">
-              <button class="corBotao" class="btn">Responder</button>
+              <a href="/pergunta/<%= perguntas.id%>"><button class="corBotao" class="btn">Responder</button></a>
             </div>
           </div>
           <% }) %>
