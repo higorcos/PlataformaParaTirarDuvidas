@@ -1,3 +1,9 @@
+/* 
+   Sugestão 
+Organizar os titulos das peguntas em modo de relevância 
+*/
+
+
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser'); //importando a biblioteca que facilita a leitura dos dados passados pelo usuario 
@@ -24,7 +30,9 @@ app.use(bodyParser.json()); // os dados são enviados via json
 
 //Rotas
 app.get('/', (req, res) => {
-  perguntas.findAll({ raw: true }).then(pergunta => {  //Ele vai buscar os dados já presentes na tabela do banco de dados // semelhante a   SELECT * ALL FROM perguntas
+  perguntas.findAll({ raw: true, order:[ //ASC= Crescente; DESC = Descrecente 
+    ['id','DESC'] //vai colocar os titulos das perguntas na pagina de forma DESC(descrecente) de 'id'(id - numeração presente no bonco de dados )
+  ]}).then(pergunta => {  //Ele vai buscar os dados já presentes na tabela do banco de dados // semelhante a   SELECT * ALL FROM perguntas
     res.render('index', {
       pergunta: pergunta
     });
@@ -50,6 +58,20 @@ app.post('/salvarPergunta', (req, res) => {
     res.redirect('/');
   })
 });
+
+app.get("/pergunta/:id",(req,res) => {
+ var id =req.params.id;
+ perguntas.findOne({
+   where: {id: id}
+ }).then(pergunta =>{
+   if(pergunta != undefined){
+    res.render("descriçãoPerguntas");
+   }else{ 
+    res.redirect("/")
+   }
+ })
+})
+
 
 app.listen(8181, () => {
   console.log('App rodando');
