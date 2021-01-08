@@ -8,7 +8,8 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser'); //importando a biblioteca que facilita a leitura dos dados passados pelo usuario 
 const connection = require('./database/database'); // importando o banco de dados
-const perguntas = require('./database/Perguntas'); //importando a tabela 
+const perguntas = require('./database/Perguntas'); //importando a tabela de perguntas
+const Resposta = require('./database/Resposta');//importando tabela de respotas
 
 //database
 connection
@@ -34,7 +35,7 @@ app.get('/', (req, res) => {
     ['id','DESC'] //vai colocar os titulos das perguntas na pagina de forma DESC(descrecente) de 'id'(id - numeração presente no bonco de dados )
   ]}).then(pergunta => {  //Ele vai buscar os dados já presentes na tabela do banco de dados // semelhante a   SELECT * ALL FROM perguntas
     res.render('index', {
-      pergunta: pergunta
+      titulosHomePage: pergunta
     });
   });
 });
@@ -65,12 +66,26 @@ app.get("/pergunta/:id",(req,res) => {
    where: {id: id}
  }).then(pergunta =>{
    if(pergunta != undefined){
-    res.render("descriçãoPerguntas");
+    res.render("descriçãoPerguntas",{
+      dadosHomePage: pergunta
+    });
    }else{ 
     res.redirect("/")
    }
  })
 })
+
+app.post("/responder",(req,res)=>{
+  var corpoPage = req.body.corpoResposta; //pega os names dos campos que quer receber os dados 
+  var id_Page = req.body.IdDaPergunta;
+  Resposta.create({
+    corpo: corpoPage,
+    perguntaID: id_Page,
+  }).then(()=>{
+    res.redirect(`/pergunta/${id_Page}`)
+   // res.redirect("/")
+  });
+});
 
 
 app.listen(8181, () => {
